@@ -3,7 +3,6 @@ import json, os, numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 from matplotlib.patches import Polygon, Patch
-from matplotlib.lines import Line2D
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -14,7 +13,7 @@ plt.rcParams.update({"font.size": 6.5, "font.family": "DejaVu Sans", "axes.linew
                      "xtick.color": INK2, "ytick.color": INK2, "xtick.major.width": 0.6, "ytick.major.width": 0.6, "xtick.major.size": 2.5, "ytick.major.size": 2.5,
                      "axes.spines.top": False, "axes.spines.right": False, "axes.titlesize": 7, "axes.titleweight": "bold", "axes.titlelocation": "left",
                      "legend.frameon": False, "pdf.fonttype": 42, "svg.fonttype": "none"})
-REG = [("SW_Africa", "Benguela"), ("NA_east", "Gulf Stream")]; BLOOM = {"SW_Africa": 0.28, "NA_east": 0.40}   # manuscript bloom centroid trends
+REG = [("SW_Africa", "Benguela"), ("NA_east", "Gulf Stream")]
 boxes = json.load(open("config/regions.json"))
 land = np.load("data/processed/ne10m_land_coast_lines.npz")["land"]; LANDR = np.split(land, np.flatnonzero(np.isnan(land[:, 0])))
 def f2(v): return f"{0.0 if abs(v) < 0.005 else v:+.2f}"

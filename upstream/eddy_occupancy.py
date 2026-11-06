@@ -1,9 +1,9 @@
-"""Eddy-only extraction of original s5_positional.py; requires historical s2geom contour masks."""
+"""Eddy-only extraction of original s5_positional.py; uses the retained contour-distance masks."""
 from pathlib import Path as FilePath
 import os
 os.chdir(FilePath(__file__).resolve().parents[1])
 FilePath("results/rebuilt").mkdir(parents=True, exist_ok=True)
-import sys, json, os, numpy as np, pandas as pd
+import sys, numpy as np, pandas as pd
 from matplotlib.path import Path
 R = 6371.0088; tag = sys.argv[1]; IM = "data/intermediate"; OUT = "results/rebuilt"
 os.makedirs(OUT, exist_ok=True)
@@ -14,10 +14,9 @@ ok = np.isfinite(pdist); ring = np.where(ok, np.minimum((np.nan_to_num(pdist)//1
 pa = np.where(ok, (R*np.radians(res))**2*np.cos(np.radians(plat))[:, None], 0.0)
 A_ring = np.bincount(ring[ok], weights=pa[ok], minlength=nr)
 ring_m = {}
-# ---------- B: eddy-centre density and C: occupancy per ring ----------
+# Daily eddy occupancy by ring
 d0 = np.datetime64("1950-01-01"); days = np.arange(np.datetime64("2003-01-01"), np.datetime64("2021-01-01"))
 dmon = days.astype("datetime64[M]").astype(str); tt_days = (days-d0).astype(int)
-cnt = {p: np.zeros((len(days), nr)) for p in ["anticyclonic", "cyclonic"]}
 ny, nx = (pdist.shape[0]//2)*2, (pdist.shape[1]//2)*2
 sub_ring = ring[:ny, :nx].reshape(ny//2, 2, nx//2, 2).transpose(0, 2, 1, 3).reshape(ny//2, nx//2, 4)
 sub_area = pa[:ny, :nx].reshape(ny//2, 2, nx//2, 2).transpose(0, 2, 1, 3).reshape(ny//2, nx//2, 4)
@@ -42,8 +41,8 @@ for di, tt in enumerate(tt_days):
             if i1 <= i0 or j1 <= j0: continue
             GX, GY = np.meshgrid(g4lon[i0:i1], g4lat[j0:j1])
             ins = Path(np.column_stack([lo, la])).contains_points(np.column_stack([GX.ravel(), GY.ravel()])).reshape(GX.shape)
-            for c, f in [("all", True), (pol, True)]:
-                if f: masks[c][j0:j1, i0:i1] |= ins
+            for c in ("all", pol):
+                masks[c][j0:j1, i0:i1] |= ins
     for c in cats:
         r_ = sub_ring[masks[c]].ravel(); a_ = sub_area[masks[c]].ravel(); kk = r_ >= 0
         occ[c][di] = np.bincount(r_[kk], weights=a_[kk], minlength=nr)/A_ring

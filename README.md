@@ -32,7 +32,7 @@ To verify processing one level further upstream, using the included regional con
 python scripts/rebuild_intermediates.py
 ```
 
-This takes longer and writes to `results/rebuilt/`, leaving the bundled inputs intact. It rebuilds eddy occupancy, occurrence maps and current/divergence ring averages and compares them with the figure inputs. See [upstream processing](docs/UPSTREAM.md) for global-product acquisition and provenance. The large original global NetCDF products are not bundled.
+This takes longer and writes to `results/rebuilt/`, leaving the bundled inputs intact. It rebuilds eddy occupancy, occurrence maps and current/divergence ring averages and compares them with the figure inputs. See [upstream processing](docs/UPSTREAM.md) for source-product provenance and reproduction boundaries. The large original global NetCDF products are not bundled.
 
 ## Scientific interpretation
 

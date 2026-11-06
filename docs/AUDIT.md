@@ -10,7 +10,7 @@
 | Statistics | `s17_equivalent_metrics.py`, `s26_polarity.py`, `s28_ekman_metrics.py`, `src/coastal_bloom/trends.py` | `scripts/analyse.py` and `src/coastal_bloom/trends.py` |
 | Eddy occupancy input | Eddy section of `s5_positional.py`; contour-distance part of `s2_contact.py` | `upstream/eddy_occupancy.py`, `upstream/contour_geometry.py` |
 | Occurrence map | `s19_occurrence_map.py` | Retained upstream |
-| Current grids and rings | `s27_mob_ekman.py`, `s27b_mob_components.py`, `s28_ekman_metrics.py` | Retained upstream |
+| Current grids and rings | `s27_mob_ekman.py`, `s27b_mob_components.py`, `s28_ekman_metrics.py` | Frozen monthly grids plus the 15 m ring-aggregation portion of `s28_ekman_metrics.py` |
 
 The original Fig 2 EKE block is excluded because the contribution explicitly excluded it. Other systems, kinetic-energy variants, jet-axis diagnostics, particle experiments, contact-history outcomes, synthetic examples, alternative figure scripts and manuscript editorial comments are excluded. No files in the original repository were deleted.
 
@@ -29,3 +29,7 @@ The original Fig 2 EKE block is excluded because the contribution explicitly exc
 Numerical reproduction establishes consistency with the submitted analysis. It does not establish that the coastal masks match the manuscript, that the proxy is vertical velocity, that mapped 10 km bins are independently resolved, or that the physical changes caused bloom redistribution. Source downloads are not automatically refreshed: a newer upstream product may produce different results. The exact global raw download path is provided for provenance, but full global-product acquisition is not part of the offline validation.
 
 `source_manifest.json` records selected source paths and SHA-256 fingerprints; `array_schema.json` records every bundled NPZ array and shape. Adapted code is identified above; copied-source checksums describe its original source, not necessarily its edited final content. `checksums.sha256` records the actual final bundled data files.
+
+## Further code reduction
+
+Removed optional global-data acquisition scripts and the unused coast-grid reconstruction script. Removed surface-depth sensitivity calculations, unplotted divergence/centroid statistics, duplicate trend routines, unused eddy-centre allocations and unused plot imports/constants. All retained Python files are called by either the figure reproduction command or the offline upstream validation command. Frozen geometry and source/intermediate data remain included; full source-product downloading is outside this repository's execution workflow.

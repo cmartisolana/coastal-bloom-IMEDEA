@@ -125,34 +125,14 @@
     "sha256": "8b33844f919b06c0084af8b1095ce18813473386534dcf652f9133906ec94446"
   },
   {
-    "source": "analysis_mesoscale_export/scripts/s2_extract_meta.py",
-    "destination": "upstream/s2_extract_meta.py",
-    "sha256": "9c4d925672b4d430fb3bbe33faecc321c76b325dc304a2c5f31eaf86b39290e5"
-  },
-  {
     "source": "analysis_mesoscale_export/scripts/s19_occurrence_map.py",
     "destination": "upstream/s19_occurrence_map.py",
     "sha256": "3eb7cc679c9556ab141a01d928fdd9da9b311eb2586819e4e075a9aec238caab"
   },
   {
-    "source": "analysis_mesoscale_export/scripts/s27_mob_ekman.py",
-    "destination": "upstream/s27_mob_ekman.py",
-    "sha256": "6e8ccf492b9ee478a6e2084923fd555903fcfa7a765ed2297ba352a6d03767b4"
-  },
-  {
-    "source": "analysis_mesoscale_export/scripts/s27b_mob_components.py",
-    "destination": "upstream/s27b_mob_components.py",
-    "sha256": "7ba3dda60135b554be3c46963470e7d2f135cabd3ac1b0483d97e38848b40f86"
-  },
-  {
     "source": "analysis_mesoscale_export/scripts/s28_ekman_metrics.py",
     "destination": "upstream/s28_ekman_metrics.py",
     "sha256": "8d6aaca5e25788cde6e60e05f84e0709fb9bf34dc35cb6aef63538e0c4e3db1f"
-  },
-  {
-    "source": "scripts/eddy_ring_geometry.py",
-    "destination": "upstream/eddy_ring_geometry.py",
-    "sha256": "f5de38333244d7f654fc8e702db59ee0d9e750dbd6e3380ab7172a96e9c9d641"
   },
   {
     "source": "analysis_mesoscale_export/interim/meta4_SW_Africa_cyclonic.npz",

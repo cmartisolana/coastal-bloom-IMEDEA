@@ -13,13 +13,13 @@ These filenames identify the source snapshots; the temporal interval is broader 
 
 ## GlobCurrent
 
-Copernicus Marine product `MULTIOBS_GLO_PHY_MYNRT_015_003`, dataset `cmems_obs-mob_glo_phy-cur_my_0.25deg_P1D-m`, version `202411`. Daily 0.25° total and Ekman currents; primary analysis at 15 m. Exact product/version identifiers and acquisition endpoint are recorded in the original configuration and retained readers.
+Copernicus Marine product `MULTIOBS_GLO_PHY_MYNRT_015_003`, dataset `cmems_obs-mob_glo_phy-cur_my_0.25deg_P1D-m`, version `202411`. Daily 0.25° total and Ekman currents; primary analysis at 15 m. Exact product/version identifiers and acquisition endpoint are recorded in the original configuration and documented below.
 
 - [Product user manual](https://documentation.marine.copernicus.eu/PUM/CMEMS-MOB-PUM-015-003.pdf)
 - [Quality information document](https://documentation.marine.copernicus.eu/QUID/CMEMS-MOB-QUID-015-003.pdf)
 - [Copernicus Marine catalogue](https://data.marine.copernicus.eu/)
 
-The provider documents were located on 2026-11-06. The private handoff preserves the **202411 snapshot**; no claim is made that it is the current recommended version. The original public ARCO endpoint is embedded in the two acquisition scripts and listed in `UPSTREAM.md`. It was not redownloaded during validation.
+The provider documents were located on 2026-11-06. The private handoff preserves the **202411 snapshot**; no claim is made that it is the current recommended version. The original public ARCO endpoint is listed in `UPSTREAM.md`. It was not redownloaded during validation.
 
 Included grids: four Benguela chunks of projected monthly current and divergence means; one Gulf Stream monthly component archive. Retaining these allows offline verification of ring aggregation and the manuscript figures. Full daily global currents are not bundled.
 
