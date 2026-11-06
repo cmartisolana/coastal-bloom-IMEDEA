@@ -1,0 +1,8 @@
+equivalent_metrics_summary.csv: 2 rows match archived calculations
+polarity_summary.csv: 6 rows match archived calculations
+polarity_share_ring_trends.csv: 120 rows match archived calculations
+ekman_trends.csv: 116 rows match archived calculations
+SW_Africa_occupancy_share_ring_trends.csv: 20 rows match archived calculations
+NA_east_occupancy_share_ring_trends.csv: 20 rows match archived calculations
+260 estimates: finite matching intervals and two-sided normal P values
+All annual shares sum to 100%; monthly and annual HAC match statsmodels independently

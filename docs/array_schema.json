@@ -1,0 +1,1087 @@
+[
+  {
+    "file": "data/intermediate/meta4_NA_east_anticyclonic.npz",
+    "arrays": {
+      "time": {
+        "shape": [
+          201163
+        ],
+        "dtype": "int32"
+      },
+      "lon": {
+        "shape": [
+          201163
+        ],
+        "dtype": "float32"
+      },
+      "lat": {
+        "shape": [
+          201163
+        ],
+        "dtype": "float32"
+      },
+      "contour_lon": {
+        "shape": [
+          201163,
+          30
+        ],
+        "dtype": "float32"
+      },
+      "contour_lat": {
+        "shape": [
+          201163,
+          30
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/meta4_NA_east_cyclonic.npz",
+    "arrays": {
+      "time": {
+        "shape": [
+          228111
+        ],
+        "dtype": "int32"
+      },
+      "lon": {
+        "shape": [
+          228111
+        ],
+        "dtype": "float32"
+      },
+      "lat": {
+        "shape": [
+          228111
+        ],
+        "dtype": "float32"
+      },
+      "contour_lon": {
+        "shape": [
+          228111,
+          30
+        ],
+        "dtype": "float32"
+      },
+      "contour_lat": {
+        "shape": [
+          228111,
+          30
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/meta4_SW_Africa_anticyclonic.npz",
+    "arrays": {
+      "time": {
+        "shape": [
+          149219
+        ],
+        "dtype": "int32"
+      },
+      "lon": {
+        "shape": [
+          149219
+        ],
+        "dtype": "float32"
+      },
+      "lat": {
+        "shape": [
+          149219
+        ],
+        "dtype": "float32"
+      },
+      "contour_lon": {
+        "shape": [
+          149219,
+          30
+        ],
+        "dtype": "float32"
+      },
+      "contour_lat": {
+        "shape": [
+          149219,
+          30
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/meta4_SW_Africa_cyclonic.npz",
+    "arrays": {
+      "time": {
+        "shape": [
+          178540
+        ],
+        "dtype": "int32"
+      },
+      "lon": {
+        "shape": [
+          178540
+        ],
+        "dtype": "float32"
+      },
+      "lat": {
+        "shape": [
+          178540
+        ],
+        "dtype": "float32"
+      },
+      "contour_lon": {
+        "shape": [
+          178540,
+          30
+        ],
+        "dtype": "float32"
+      },
+      "contour_lat": {
+        "shape": [
+          178540,
+          30
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/mob_SW_Africa_chunk0.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          29
+        ],
+        "dtype": "<U25"
+      },
+      "lon": {
+        "shape": [
+          46
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          99
+        ],
+        "dtype": "float64"
+      },
+      "n_east": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "n_north": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ekman_xshelf_15m": {
+        "shape": [
+          29,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_15m": {
+        "shape": [
+          29,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "total_xshelf_15m": {
+        "shape": [
+          29,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_xshelf_0m": {
+        "shape": [
+          29,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_0m": {
+        "shape": [
+          29,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/mob_SW_Africa_chunk1.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          76
+        ],
+        "dtype": "<U25"
+      },
+      "lon": {
+        "shape": [
+          46
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          99
+        ],
+        "dtype": "float64"
+      },
+      "n_east": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "n_north": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ekman_xshelf_15m": {
+        "shape": [
+          76,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_15m": {
+        "shape": [
+          76,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "total_xshelf_15m": {
+        "shape": [
+          76,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_xshelf_0m": {
+        "shape": [
+          76,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_0m": {
+        "shape": [
+          76,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/mob_SW_Africa_chunk2.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          75
+        ],
+        "dtype": "<U25"
+      },
+      "lon": {
+        "shape": [
+          46
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          99
+        ],
+        "dtype": "float64"
+      },
+      "n_east": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "n_north": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ekman_xshelf_15m": {
+        "shape": [
+          75,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_15m": {
+        "shape": [
+          75,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "total_xshelf_15m": {
+        "shape": [
+          75,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_xshelf_0m": {
+        "shape": [
+          75,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_0m": {
+        "shape": [
+          75,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/mob_SW_Africa_chunk3.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          39
+        ],
+        "dtype": "<U25"
+      },
+      "lon": {
+        "shape": [
+          46
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          99
+        ],
+        "dtype": "float64"
+      },
+      "n_east": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "n_north": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ekman_xshelf_15m": {
+        "shape": [
+          39,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_15m": {
+        "shape": [
+          39,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "total_xshelf_15m": {
+        "shape": [
+          39,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_xshelf_0m": {
+        "shape": [
+          39,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      },
+      "ekman_div_0m": {
+        "shape": [
+          39,
+          99,
+          46
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/intermediate/mob_components_NA_east.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          216
+        ],
+        "dtype": "<U25"
+      },
+      "lon": {
+        "shape": [
+          84
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          66
+        ],
+        "dtype": "float64"
+      },
+      "product": {
+        "shape": [],
+        "dtype": "<U80"
+      },
+      "ue_15m": {
+        "shape": [
+          216,
+          66,
+          84
+        ],
+        "dtype": "float32"
+      },
+      "ve_15m": {
+        "shape": [
+          216,
+          66,
+          84
+        ],
+        "dtype": "float32"
+      },
+      "uo_15m": {
+        "shape": [
+          216,
+          66,
+          84
+        ],
+        "dtype": "float32"
+      },
+      "vo_15m": {
+        "shape": [
+          216,
+          66,
+          84
+        ],
+        "dtype": "float32"
+      },
+      "ue_0m": {
+        "shape": [
+          216,
+          66,
+          84
+        ],
+        "dtype": "float32"
+      },
+      "ve_0m": {
+        "shape": [
+          216,
+          66,
+          84
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  {
+    "file": "data/processed/NA_east_ekman_rings.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          216
+        ],
+        "dtype": "<U25"
+      },
+      "ring_ekman_xshelf_15m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_xshelf_15m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_xshelf_15m": {
+        "shape": [
+          66,
+          84
+        ],
+        "dtype": "float64"
+      },
+      "ring_ekman_xshelf_0m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_xshelf_0m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_xshelf_0m": {
+        "shape": [
+          66,
+          84
+        ],
+        "dtype": "float64"
+      },
+      "ring_total_xshelf_15m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_total_xshelf_15m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_total_xshelf_15m": {
+        "shape": [
+          66,
+          84
+        ],
+        "dtype": "float64"
+      },
+      "ring_ekman_div_15m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_div_15m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_div_15m": {
+        "shape": [
+          66,
+          84
+        ],
+        "dtype": "float64"
+      },
+      "ring_ekman_div_0m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_div_0m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_div_0m": {
+        "shape": [
+          66,
+          84
+        ],
+        "dtype": "float64"
+      },
+      "lon": {
+        "shape": [
+          84
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          66
+        ],
+        "dtype": "float64"
+      }
+    }
+  },
+  {
+    "file": "data/processed/NA_east_ring_monthly.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          216
+        ],
+        "dtype": "<U7"
+      },
+      "ring_area_km2": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "ring_limit_km": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "occupancy_all": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "occupancy_cyclonic": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "occupancy_anticyclonic": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      }
+    }
+  },
+  {
+    "file": "data/processed/SW_Africa_ekman_rings.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          216
+        ],
+        "dtype": "<U7"
+      },
+      "ring_ekman_xshelf_15m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_xshelf_15m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_xshelf_15m": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ring_ekman_xshelf_0m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_xshelf_0m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_xshelf_0m": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ring_total_xshelf_15m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_total_xshelf_15m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_total_xshelf_15m": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ring_ekman_div_15m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_div_15m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_div_15m": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "ring_ekman_div_0m": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "cov_ekman_div_0m": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "map_mean_ekman_div_0m": {
+        "shape": [
+          99,
+          46
+        ],
+        "dtype": "float64"
+      },
+      "lon": {
+        "shape": [
+          46
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          99
+        ],
+        "dtype": "float64"
+      }
+    }
+  },
+  {
+    "file": "data/processed/SW_Africa_ring_monthly.npz",
+    "arrays": {
+      "months": {
+        "shape": [
+          216
+        ],
+        "dtype": "<U7"
+      },
+      "ring_area_km2": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "ring_limit_km": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "occupancy_all": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "occupancy_cyclonic": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      },
+      "occupancy_anticyclonic": {
+        "shape": [
+          216,
+          20
+        ],
+        "dtype": "float64"
+      }
+    }
+  },
+  {
+    "file": "data/processed/ne10m_coast_filtered_2km.npz",
+    "arrays": {
+      "coast_lon": {
+        "shape": [
+          437940
+        ],
+        "dtype": "float64"
+      },
+      "coast_lat": {
+        "shape": [
+          437940
+        ],
+        "dtype": "float64"
+      },
+      "group": {
+        "shape": [
+          437940
+        ],
+        "dtype": "int64"
+      },
+      "note": {
+        "shape": [],
+        "dtype": "<U258"
+      }
+    }
+  },
+  {
+    "file": "data/processed/ne10m_land_coast_lines.npz",
+    "arrays": {
+      "land": {
+        "shape": [
+          453013,
+          2
+        ],
+        "dtype": "float32"
+      },
+      "coast": {
+        "shape": [
+          415090,
+          2
+        ],
+        "dtype": "float32"
+      },
+      "note": {
+        "shape": [],
+        "dtype": "<U87"
+      }
+    }
+  },
+  {
+    "file": "data/processed/occurrence_map_NA_east.npz",
+    "arrays": {
+      "lon": {
+        "shape": [
+          484
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          376
+        ],
+        "dtype": "float64"
+      },
+      "freq_pct": {
+        "shape": [
+          376,
+          484
+        ],
+        "dtype": "float64"
+      },
+      "dist_km": {
+        "shape": [
+          376,
+          484
+        ],
+        "dtype": "float64"
+      },
+      "n_days": {
+        "shape": [],
+        "dtype": "int64"
+      }
+    }
+  },
+  {
+    "file": "data/processed/occurrence_map_SW_Africa.npz",
+    "arrays": {
+      "lon": {
+        "shape": [
+          248
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          582
+        ],
+        "dtype": "float64"
+      },
+      "freq_pct": {
+        "shape": [
+          582,
+          248
+        ],
+        "dtype": "float64"
+      },
+      "dist_km": {
+        "shape": [
+          582,
+          248
+        ],
+        "dtype": "float64"
+      },
+      "n_days": {
+        "shape": [],
+        "dtype": "int64"
+      }
+    }
+  },
+  {
+    "file": "data/processed/rings_NA_east.npz",
+    "arrays": {
+      "box": {
+        "shape": [
+          4
+        ],
+        "dtype": "float64"
+      },
+      "res": {
+        "shape": [],
+        "dtype": "float64"
+      },
+      "lon": {
+        "shape": [
+          969
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          753
+        ],
+        "dtype": "float64"
+      },
+      "edges": {
+        "shape": [
+          21
+        ],
+        "dtype": "float64"
+      },
+      "area_km2": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "dist": {
+        "shape": [
+          753,
+          969
+        ],
+        "dtype": "float16"
+      },
+      "note": {
+        "shape": [],
+        "dtype": "<U89"
+      }
+    }
+  },
+  {
+    "file": "data/processed/rings_SW_Africa.npz",
+    "arrays": {
+      "box": {
+        "shape": [
+          4
+        ],
+        "dtype": "float64"
+      },
+      "res": {
+        "shape": [],
+        "dtype": "float64"
+      },
+      "lon": {
+        "shape": [
+          497
+        ],
+        "dtype": "float64"
+      },
+      "lat": {
+        "shape": [
+          1164
+        ],
+        "dtype": "float64"
+      },
+      "edges": {
+        "shape": [
+          21
+        ],
+        "dtype": "float64"
+      },
+      "area_km2": {
+        "shape": [
+          20
+        ],
+        "dtype": "float64"
+      },
+      "dist": {
+        "shape": [
+          1164,
+          497
+        ],
+        "dtype": "float16"
+      },
+      "note": {
+        "shape": [],
+        "dtype": "<U89"
+      }
+    }
+  }
+]

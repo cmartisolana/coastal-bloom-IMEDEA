@@ -1,0 +1,6 @@
+SW_Africa_ring_monthly.npz: all selected arrays match bundled publication inputs
+occurrence_map_SW_Africa.npz: all selected arrays match bundled publication inputs
+SW_Africa_ekman_rings.npz: all selected arrays match bundled publication inputs
+NA_east_ring_monthly.npz: all selected arrays match bundled publication inputs
+occurrence_map_NA_east.npz: all selected arrays match bundled publication inputs
+NA_east_ekman_rings.npz: all selected arrays match bundled publication inputs
