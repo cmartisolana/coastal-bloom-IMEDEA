@@ -12,6 +12,8 @@ Reproducible eddy-occurrence, offshore-current and Ekman-divergence analyses for
 | Datasets, processing and statistics | [Methods](docs/METHODS.md), [datasets](docs/DATASETS.md), [data dictionary](docs/DATA_DICTIONARY.md) |
 | Figure captions | [Captions](docs/CAPTIONS.md) |
 | Reproducibility | Commands below, [validation](results/validation.txt), [source audit](docs/AUDIT.md) |
+| Data/code availability statements, required acknowledgements | [Availability](docs/AVAILABILITY.md) |
+| How to cite | [`CITATION.cff`](CITATION.cff) |
 
 ## Reproduce
 

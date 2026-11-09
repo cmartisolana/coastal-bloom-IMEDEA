@@ -1,0 +1,70 @@
+cff-version: 1.2.0
+message: "If you use these figures, data or code, please cite them as below, together with the source products listed under references."
+type: software
+title: "Coastal bloom redistribution: regional physical diagnostics (Benguela and Gulf Stream, 2003–2020)"
+abstract: "Eddy-occurrence, offshore-current and Ekman-divergence diagnostics on 10 km coastal rings for Benguela and the Gulf Stream, January 2003–December 2020, with code, figure inputs and trend tables reproducing Figures 1, 2 and S1."
+authors:
+  - family-names: "Martí-Solana"
+    given-names: "Cristina"
+    affiliation: "IMEDEA (CSIC-UIB), Esporles, Spain"
+  - family-names: "Ruiz"
+    given-names: "Simón"
+    affiliation: "IMEDEA (CSIC-UIB), Esporles, Spain"
+repository-code: "https://github.com/cmartisolana/coastal-bloom-publication"
+keywords:
+  - mesoscale eddies
+  - Ekman transport
+  - coastal upwelling
+  - Benguela
+  - Gulf Stream
+  - phytoplankton blooms
+  - META4.0
+  - GlobCurrent
+references:
+  - type: data
+    title: "Mesoscale Eddy Trajectory Atlas META4.0 DT allsat"
+    authors:
+      - name: "SSALTO/DUACS, AVISO+, CNES, IMEDEA"
+    doi: "10.24400/527896/a01-2026.001"
+  - type: article
+    title: "META4.0: a new global mesoscale eddy network atlas derived from altimetry"
+    authors:
+      - family-names: "Gamot"
+        given-names: "Juliette"
+      - family-names: "Delepoulle"
+        given-names: "Antoine"
+      - family-names: "Nencioli"
+        given-names: "Francesco"
+      - family-names: "Pujol"
+        given-names: "Marie-Isabelle"
+      - family-names: "Dibarboure"
+        given-names: "Gerald"
+    journal: "Earth System Science Data"
+    volume: 18
+    start: 7043
+    end: 7070
+    year: 2026
+    doi: "10.5194/essd-18-7043-2026"
+  - type: data
+    title: "Global Total (COPERNICUS-GLOBCURRENT), Ekman and Geostrophic currents at the Surface and 15m (MULTIOBS_GLO_PHY_MYNRT_015_003)"
+    authors:
+      - name: "E.U. Copernicus Marine Service"
+    doi: "10.48670/mds-00327"
+  - type: article
+    title: "Beyond GOCE for the ocean circulation estimate: Synergetic use of altimetry, gravimetry, and in situ data provides new insight into geostrophic and Ekman currents"
+    authors:
+      - family-names: "Rio"
+        given-names: "Marie-Hélène"
+      - family-names: "Mulet"
+        given-names: "Sandrine"
+      - family-names: "Picot"
+        given-names: "Nicolas"
+    journal: "Geophysical Research Letters"
+    volume: 41
+    year: 2014
+    doi: "10.1002/2014GL061773"
+  - type: data
+    title: "Natural Earth 1:10m physical vectors (coastline, land)"
+    authors:
+      - name: "Natural Earth"
+    url: "https://www.naturalearthdata.com/downloads/10m-physical-vectors/"
