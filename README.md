@@ -18,15 +18,15 @@ Regional physical diagnostics for Benguela and the Gulf Stream, January 2003–D
 
 ## Reproduce
 
-Tested with Python 3.12. From the repository root:
+Uses [uv](https://docs.astral.sh/uv/); the Python version and exact package versions are fixed in `.python-version`, `pyproject.toml` and `uv.lock`. From the repository root:
 
 ```bash
-python -m pip install -r requirements.txt
-python scripts/reproduce.py              # statistics (results/tables/) and figures (figures/)
-python scripts/rebuild_intermediates.py  # optional: recompute figure inputs from the regional extracts
+uv sync                                         # create .venv with the locked environment
+uv run python scripts/reproduce.py              # statistics (results/tables/) and figures (figures/)
+uv run python scripts/rebuild_intermediates.py  # optional: recompute figure inputs from the regional extracts
 ```
 
-The first command uses the bundled figure inputs and needs no network access. The second recomputes eddy occupancy, occurrence maps and current/upwelling band averages from `data/intermediate/` into `results/rebuilt/` and checks them against `data/processed/`.
+`reproduce.py` uses the bundled figure inputs and needs no network access once the environment is installed. `rebuild_intermediates.py` recomputes eddy occupancy, occurrence maps and current/upwelling band averages from `data/intermediate/` into `results/rebuilt/` and checks them against `data/processed/`.
 
 ## Main caveats
 
