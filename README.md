@@ -6,7 +6,7 @@ Reproducible eddy-occurrence, offshore-current and Ekman-divergence analyses for
 
 | Requested item | Location |
 |---|---|
-| Figures 1, 2 and S1 | `figures/`: PDF, editable SVG, 300 dpi PNG |
+| Figures: eddies, currents and Ekman, eddy polarity | `figures/`: PDF, editable SVG, 300 dpi PNG |
 | Underlying figure data | `data/processed/`; readable monthly and annual CSVs in `results/tables/` |
 | Trend estimates, 95% CIs, P values | `results/tables/all_trends.csv` (260 estimates) |
 | Datasets, processing and statistics | [Methods](docs/METHODS.md), [datasets](docs/DATASETS.md), [data dictionary](docs/DATA_DICTIONARY.md) |
@@ -38,7 +38,7 @@ This takes longer and writes to `results/rebuilt/`, leaving the bundled inputs i
 
 ## Scientific interpretation
 
-The original point estimates and calculations are preserved. Centroid curves are robust STL trends; descriptive Theil–Sen slopes are reported separately from the OLS estimates that supply the confidence intervals and P values. Figure 1 labels now show **OLS estimates with matching OLS intervals**, correcting the original mixed-estimator presentation. Both sets of estimates are in the tables.
+The original point estimates and calculations are preserved. Centroid curves are robust STL trends; descriptive Theil–Sen slopes are reported separately from the OLS estimates that supply the confidence intervals and P values. The eddy-figure labels now show **OLS estimates with matching OLS intervals**, correcting the original mixed-estimator presentation. Both sets of estimates are in the tables.
 
 Annual contribution shares use **equal monthly weighting**, matching the submitted analysis. The approximate coastal domains are not the manuscript authors' exact masks. Velocity trends retain the original 0–200 km range, with 0–30 km shaded as low reliability; the positive-divergence share excludes 0–30 km. Read the methods and audit before quoting results.
 

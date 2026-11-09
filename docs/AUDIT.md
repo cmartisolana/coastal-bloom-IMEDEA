@@ -4,21 +4,21 @@
 
 | Contribution figure | Original code block | Retained implementation |
 |---|---|---|
-| Figure 1, eddies | `analysis_mesoscale_export/scripts/s30_definitive_figures.py`, Fig 1 | `scripts/plot_figures.py`, Fig 1 |
-| Figure 2, currents | Same file, original Fig 3 | Renumbered Fig 2 |
-| Figure S1, polarity shares | Same file, Fig S1 | Fig S1 |
+| Eddies | `analysis_mesoscale_export/scripts/s30_definitive_figures.py`, Fig 1 | `scripts/plot_figures.py` → `figures/eddies` |
+| Currents and Ekman | Same file, Fig 3 | `figures/currents_Ekman` |
+| Eddy polarity shares | Same file, Fig S1 | `figures/eddy_polarity_share` |
 | Statistics | `s17_equivalent_metrics.py`, `s26_polarity.py`, `s28_ekman_metrics.py`, `src/coastal_bloom/trends.py` | `scripts/analyse.py` and `src/coastal_bloom/trends.py` |
 | Eddy occupancy input | Eddy section of `s5_positional.py`; contour-distance part of `s2_contact.py` | `upstream/eddy_occupancy.py`, `upstream/contour_geometry.py` |
 | Occurrence map | `s19_occurrence_map.py` | Retained upstream |
 | Current grids and rings | `s27_mob_ekman.py`, `s27b_mob_components.py`, `s28_ekman_metrics.py` | Frozen monthly grids plus the 15 m ring-aggregation portion of `s28_ekman_metrics.py` |
 
-The original Fig 2 EKE block is excluded because the contribution explicitly excluded it. Other systems, kinetic-energy variants, jet-axis diagnostics, particle experiments, contact-history outcomes, synthetic examples, alternative figure scripts and manuscript editorial comments are excluded. No files in the original repository were deleted.
+The EKE figure block of the original script is excluded because the contribution explicitly excluded it. Other systems, kinetic-energy variants, jet-axis diagnostics, particle experiments, contact-history outcomes, synthetic examples, alternative figure scripts and manuscript editorial comments are excluded. No files in the original repository were deleted.
 
 ## Changes made for the handoff
 
 1. Recomputed 260 relevant centroid, share and velocity estimates and added matching model-based two-sided P values.
-2. Kept descriptive Theil–Sen slopes separately from OLS inference. Figure 1 legend now pairs OLS estimates with OLS CIs; the STL curves and descriptive Sen fit remain. This changes the displayed centroid estimate labels, not the original input data or calculation.
-3. Corrected figure numbering to 1, 2 and S1. Added editable SVG and consistent low-reliability shading for near-coastal velocity trends.
+2. Kept descriptive Theil–Sen slopes separately from OLS inference. The eddy-figure legend now pairs OLS estimates with OLS CIs; the STL curves and descriptive Sen fit remain. This changes the displayed centroid estimate labels, not the original input data or calculation.
+3. Figures are named by content (eddies, currents_Ekman, eddy_polarity_share); they carry no manuscript numbering. Added editable SVG and consistent low-reliability shading for near-coastal velocity trends.
 4. Exported monthly/annual source series as CSV; bundled map arrays, coast geometry, eddy contour extracts and current-grid intermediates.
 5. Removed unrelated arrays from eddy monthly/contour archives; converted trusted historical object-string arrays to Unicode to allow safe NumPy loading without pickle.
 6. Added an offline rebuild, numerical regression checks against archived outputs, independent statsmodels covariance checks, dependency pins and CI.

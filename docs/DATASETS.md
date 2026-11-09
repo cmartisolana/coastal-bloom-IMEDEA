@@ -1,32 +1,9 @@
-# Datasets and provenance
+# Datasets
 
-## META4.0 eddy atlas
+| Product | Used here |
+|---|---|
+| [META4.0 DT allsat mesoscale eddy atlas (AVISO+)](https://www.aviso.altimetry.fr/en/data/products/value-added-products/global-mesoscale-eddy-trajectory-product/meta4-0-dt.html) | Effective contours of cyclonic and anticyclonic eddies, 2003–2020 (files `META4_DT_allsat_{anticyclonic,cyclonic}_19930101_20230908.nc`) |
+| [Copernicus-GlobCurrent, MULTIOBS_GLO_PHY_MYNRT_015_003 (Copernicus Marine)](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_MYNRT_015_003/description) | Dataset `cmems_obs-mob_glo_phy-cur_my_0.25deg_P1D-m`, version 202411: total and Ekman currents at 15 m, 2003–2020 |
+| [Natural Earth 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) | Coastline and land, prepared as the frozen arrays in `data/processed/ne10m_*.npz` |
 
-AVISO+ Mesoscale Eddy Trajectory Atlas META4.0, delayed-time all-satellite, DOI [10.24400/527896/a01-2026.001](https://doi.org/10.24400/527896/a01-2026.001) ([product page](https://www.aviso.altimetry.fr/en/data/products/value-added-products/global-mesoscale-eddy-trajectory-product/meta4-0-dt.html)). Reference: Gamot et al. (2026), *Earth Syst. Sci. Data* 18, 7043–7070, [doi:10.5194/essd-18-7043-2026](https://doi.org/10.5194/essd-18-7043-2026). The provider's [catalogue](https://www.aviso.altimetry.fr/fr/donnees/produits/produits-a-valeur-ajoutee/trajectoires-de-tourbillons-mesoechelles.html) lists this product and DOI (checked 2026-11-06).
-
-Original local filenames:
-
-- `META4_DT_allsat_anticyclonic_19930101_20230908.nc`
-- `META4_DT_allsat_cyclonic_19930101_20230908.nc`
-
-These filenames identify the source snapshots; the temporal interval is broader than the analysis. Regional extracts under `data/intermediate/meta4_*.npz` retain time, centre coordinates and effective contours only. Global NetCDF files are not redistributed. Atlas contours arise from mapped altimetry; neither the contour vertex spacing nor the analytical band width establishes effective resolution.
-
-## GlobCurrent
-
-Copernicus Marine product `MULTIOBS_GLO_PHY_MYNRT_015_003` ([product page](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_MYNRT_015_003/description), DOI [10.48670/mds-00327](https://doi.org/10.48670/mds-00327)), dataset `cmems_obs-mob_glo_phy-cur_my_0.25deg_P1D-m`, version `202411`. Daily 0.25° total and Ekman currents; primary analysis at 15 m. Reference: Rio et al. (2014), *Geophys. Res. Lett.* 41, [doi:10.1002/2014GL061773](https://doi.org/10.1002/2014GL061773). Exact product/version identifiers and acquisition endpoint are recorded in the original configuration and documented below.
-
-- [Product user manual](https://documentation.marine.copernicus.eu/PUM/CMEMS-MOB-PUM-015-003.pdf)
-- [Quality information document](https://documentation.marine.copernicus.eu/QUID/CMEMS-MOB-QUID-015-003.pdf)
-- [Copernicus Marine catalogue](https://data.marine.copernicus.eu/)
-
-The provider documents were located on 2026-11-06. The private handoff preserves the **202411 snapshot**; no claim is made that it is the current recommended version. The original public ARCO endpoint is listed in `UPSTREAM.md`. It was not redownloaded during validation.
-
-Included grids: four Benguela chunks of projected monthly current and divergence means; one Gulf Stream monthly component archive. Retaining these allows offline verification of ring aggregation and the manuscript figures. Full daily global currents are not bundled.
-
-## Coastline and masks
-
-[Natural Earth 1:10m](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) coastline/land, supplied as the exact archived prepared NPZ arrays. The original workspace reports a coastline-length filter of 1428 km and resampling at 2 km. No upstream Natural Earth archive checksum or release version was recorded in the files inspected, so the frozen prepared coastline is the reproducible geometry input. Do not claim an exact Natural Earth release or an exact match to the manuscript masks.
-
-## Excluded inputs
-
-Bloom rasters and the manuscript authors' exact masks are not required to reproduce these three figures and are not bundled. No independent replication of the biological bloom analysis is claimed. The original draft's bloom-reference slopes have been removed from the new figure legend; this repository does not provide their source observations.
+The global source files are not redistributed. The repository bundles regional extracts (`data/intermediate/`) and the derived figure inputs (`data/processed/`); see [UPSTREAM.md](UPSTREAM.md) for how they were produced. Bloom rasters and the manuscript authors' masks are not used.

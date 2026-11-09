@@ -1,4 +1,4 @@
-"""Rebuild the three 15 m current/divergence fields needed for Figure 2.
+"""Rebuild the three 15 m current/divergence fields needed for the currents and Ekman figure.
 
 Uses bundled monthly grids; split months are combined with day weights.
 Statistical analyses are performed only in scripts/analyse.py.

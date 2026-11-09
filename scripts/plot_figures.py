@@ -1,4 +1,4 @@
-"""Reproduce proposal Figures 1, 2 and S1; inference labels use OLS with OLS CIs."""
+"""Reproduce the three figures (eddies, currents and Ekman, eddy polarity); inference labels use OLS with OLS CIs."""
 import json, os, numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
@@ -56,7 +56,7 @@ def save(fig, name):
         fig.savefig(f"{OUT}/{name}.{ext}", dpi=300)
     plt.close(fig)
 
-# ======================= Fig 1: eddies =======================
+# ======================= Eddies =======================
 S = pd.read_csv(f"{O7}/equivalent_metrics_summary.csv").set_index("region"); P = pd.read_csv(f"{O9}/polarity_summary.csv")
 fig, top, rows = layout()
 for col, (tag, name) in enumerate(REG):
@@ -84,9 +84,9 @@ for col, (tag, name) in enumerate(REG):
     sharebars(a, x, R.slope_pp_per_decade, R.lo, R.hi); ringaxis(a, "share trend (pp decade⁻¹)", shade=True); headroom(a)
     a.text(0.02, 0.97, f"0–60 km {f1(s.nearshore_share_pp_per_decade)} pp decade⁻¹ ({f1(s.nearshore_lo)} to {f1(s.nearshore_hi)})", transform=a.transAxes, ha="left", va="top", fontsize=6, color=INK2)
     a.set_title(f"{'ef'[col]}  {name}: contribution share by ring", pad=3)
-save(fig, "Fig1_eddies")
+save(fig, "eddies")
 
-# ======================= Fig 3: currents and Ekman =======================
+# ======================= Currents and Ekman =======================
 K = pd.read_csv(f"{O9}/ekman_trends.csv")
 def krows(tag, prefix):
     s = K[(K.region == tag) & K.metric.str.startswith(prefix)].copy(); s["x"] = [int(m.split("_")[-1].split("-")[0])+5 for m in s.metric]; return s.sort_values("x")
@@ -111,9 +111,9 @@ for col, (tag, name) in enumerate(REG):
     b0 = K[(K.region == tag) & (K.metric == "ekman_div_15m|upwelling_share_30_60")].iloc[0]
     a.text(0.98, 0.97, f"30–60 km {f1(b0.slope_per_decade)} pp decade⁻¹ ({f1(b0.lo)} to {f1(b0.hi)})", transform=a.transAxes, ha="right", va="top", fontsize=6, color=INK2)
     a.set_title(f"{'ef'[col]}  {name}: positive-divergence share", pad=3)
-save(fig, "Fig2_currents_Ekman")
+save(fig, "currents_Ekman")
 
-# ======================= Fig S1: polarity share =======================
+# ======================= Eddy polarity share =======================
 PS = pd.read_csv(f"{O9}/polarity_share_ring_trends.csv")
 fig, ax = plt.subplots(1, 2, figsize=(7.09, 2.4), gridspec_kw=dict(left=0.08, right=0.985, top=0.9, bottom=0.17, wspace=0.28))
 for col, (tag, name) in enumerate(REG):
@@ -123,4 +123,4 @@ for col, (tag, name) in enumerate(REG):
     ringaxis(a, "share trend (pp decade⁻¹)", shade=True); headroom(a, 0.25)
     a.legend(handles=[Patch(color=INK, label="cyclonic"), Patch(color=S3, label="anticyclonic")], loc="upper left", fontsize=5.8, ncol=2, handlelength=1.2)
     a.set_title(f"{'ab'[col]}  {name}: contribution share by polarity", pad=3)
-save(fig, "FigS1_polarity_share"); print("saved", sorted(os.listdir(OUT)))
+save(fig, "eddy_polarity_share"); print("saved", sorted(os.listdir(OUT)))
