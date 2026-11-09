@@ -1,4 +1,4 @@
-"""Compute only the original contour-distance preselection, without trajectory/contact analyses."""
+"""Contour-distance preselection of META4.0 eddies for the occupancy calculation."""
 from pathlib import Path
 import os, sys, json
 import numpy as np

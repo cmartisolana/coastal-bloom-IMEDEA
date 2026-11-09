@@ -1,4 +1,4 @@
-"""Eddy-only extraction of original s5_positional.py; uses the retained contour-distance masks."""
+"""Monthly eddy occupancy per coastal ring (all, cyclonic, anticyclonic), using the contour-distance preselection."""
 from pathlib import Path as FilePath
 import os
 os.chdir(FilePath(__file__).resolve().parents[1])

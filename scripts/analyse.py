@@ -54,7 +54,7 @@ def infer(region, metric, dates, y, units, annual=False, factor=1, sen=np.nan):
 
 
 def shares(values, area, years):
-    # Equal monthly weighting is intentional: reproduces the proposal calculation.
+    # Equal monthly weighting of monthly means within each year.
     total = pd.DataFrame(values*area).groupby(years).sum()
     return 100*total.div(total.sum(axis=1), axis=0)
 

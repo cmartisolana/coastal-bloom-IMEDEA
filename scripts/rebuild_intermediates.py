@@ -1,6 +1,6 @@
 """Rebuild monthly eddy/current inputs and maps from bundled intermediate data.
 
-Writes results/rebuilt only, then compares against immutable publication inputs.
+Writes results/rebuilt only, then compares them with the bundled inputs in data/processed.
 The global products do not need to be downloaded for this verification.
 """
 from pathlib import Path
@@ -9,7 +9,7 @@ import numpy as np
 root=Path(__file__).resolve().parents[1]
 os.environ.setdefault('MPLCONFIGDIR',str(Path(tempfile.gettempdir())/'coastal-bloom-mpl'))
 def run(name,*args):
-    subprocess.run([sys.executable,str(root/'upstream'/name),*args],cwd=root,check=True)
+    subprocess.run([sys.executable,str(root/'processing'/name),*args],cwd=root,check=True)
 checks=[]
 for tag in ['SW_Africa','NA_east']:
     run('contour_geometry.py',tag)
@@ -23,6 +23,6 @@ for tag in ['SW_Africa','NA_east']:
         a=np.load(root/'results/rebuilt'/name,allow_pickle=True)
         b=np.load(root/'data/processed'/name)
         for k in keys: np.testing.assert_allclose(a[k],b[k],rtol=1e-7,atol=1e-10,equal_nan=True,err_msg=f'{name}:{k}')
-        checks.append(f'{name}: all selected arrays match bundled publication inputs')
-    print(f'{tag}: upstream reproduction passed',flush=True)
-(root/'results/upstream_validation.txt').write_text('\n'.join(checks)+'\n')
+        checks.append(f'{name}: all selected arrays match data/processed')
+    print(f'{tag}: processing reproduced',flush=True)
+(root/'results/rebuilt/check.txt').write_text('\n'.join(checks)+'\n')
