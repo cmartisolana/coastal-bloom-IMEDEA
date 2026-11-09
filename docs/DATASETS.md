@@ -29,4 +29,4 @@ Natural Earth 1:10 million coastline/land, supplied as the exact archived prepar
 
 ## Excluded inputs
 
-DUACS EKE analyses, bloom rasters and the manuscript authors' exact masks are not required to reproduce these three figures and are not bundled. No independent replication of the biological bloom analysis is claimed. The original draft's bloom-reference slopes have been removed from the new figure legend; this repository does not provide their source observations.
+Bloom rasters and the manuscript authors' exact masks are not required to reproduce these three figures and are not bundled. No independent replication of the biological bloom analysis is claimed. The original draft's bloom-reference slopes have been removed from the new figure legend; this repository does not provide their source observations.
