@@ -1,16 +1,16 @@
 # Coastal bloom redistribution: eddies, currents and Ekman upwelling
 
-Regional physical diagnostics for **Benguela** and the **Gulf Stream**, January 2003–December 2020, prepared by Cristina Martí-Solana and Simón Ruiz (IMEDEA, CSIC-UIB) for the manuscript *Global coastal phytoplankton bloom distributions are shifting offshore*. We ask whether eddies, offshore currents and wind-driven upwelling changed their distance from the coast over the same period as the blooms. These are regional physical diagnostics, not causal evidence for the bloom changes.
+Regional physical diagnostics for **Benguela** and the **Gulf Stream**, January 2003–December 2020. Cristina Martí-Solana and Simón Ruiz (IMEDEA, CSIC-UIB).
 
-## Where to find what you asked for
+## Contents
 
-| Requested | Where |
+| | |
 |---|---|
-| Figures (editable vector) | [`figures/`](figures): PDF and SVG, plus 300 dpi PNG. Captions: [docs/CAPTIONS.md](docs/CAPTIONS.md) |
-| Data underlying the figures | [`results/series/`](results/series) (CSV) and [`data/processed/`](data/processed) (maps and geometry). Described in [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md) |
-| Trend estimates, 95% CIs and P values | [`results/trends/all_trends.csv`](results/trends/all_trends.csv) (all 260 estimates); main ones in [`key_results.csv`](results/trends/key_results.csv) |
-| Datasets, processing and statistical methods | [docs/METHODS.md](docs/METHODS.md) |
-| Code for reproducibility | [`scripts/`](scripts) and [`processing/`](processing); see "Reproduce" below |
+| Figures | [`figures/`](figures) (PDF, SVG, PNG); captions in [docs/CAPTIONS.md](docs/CAPTIONS.md) |
+| Data | [`results/series/`](results/series) and [`data/processed/`](data/processed); see [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md) |
+| Trends | [`results/trends/all_trends.csv`](results/trends/all_trends.csv) (estimates, 95% CIs, P values) |
+| Methods | [docs/METHODS.md](docs/METHODS.md) |
+| Code | [`scripts/`](scripts) and [`processing/`](processing) |
 
 ## The three figures
 
