@@ -1,4 +1,9 @@
-"""Contour-distance preselection of META4.0 eddies for the occupancy calculation."""
+"""Processing step 1: distance from the coast of each META4.0 eddy contour.
+
+Usage:   python processing/step1_eddy_contour_distance.py REGION   (benguela | gulf_stream)
+Inputs:  data/inputs/meta4_<region>_<polarity>.npz, data/processed/ne10m_coast_filtered_2km.npz
+Output:  results/rebuilt/<region>_<polarity>_contour_distance.npz (used by step 2)
+"""
 from pathlib import Path
 import os, sys, json
 import numpy as np
@@ -17,7 +22,7 @@ nr=(clon>x0-8)&(clon<x1+8)&(clat>y0-8)&(clat<y1+8)
 tree=cKDTree(xyz(clon[nr],clat[nr]))
 def distance(lo,la):return R*2*np.arcsin(np.clip(tree.query(xyz(lo,la))[0]/2,0,1))
 for pol in ['anticyclonic','cyclonic']:
-    z=np.load(f'data/intermediate/meta4_{tag}_{pol}.npz')
+    z=np.load(f'data/inputs/meta4_{tag}_{pol}.npz')
     dc=distance(z['lon'],z['lat'])
     L,A=z['contour_lon'].astype(float),z['contour_lat'].astype(float)
     Ld=np.concatenate([L,.5*(L+np.roll(L,-1,1))],1)
@@ -25,4 +30,4 @@ for pol in ['anticyclonic','cyclonic']:
     near=dc<500;dv=np.full(Ld.shape,np.inf)
     dv[near]=distance(Ld[near].ravel(),Ad[near].ravel()).reshape(-1,Ld.shape[1])
     inside=(Ld>=x0)&(Ld<=x1)&(Ad>=y0)&(Ad<=y1)
-    np.savez_compressed(f'results/rebuilt/s2geom_{tag}_{pol}.npz',dmin_contour_inbox_km=np.where(inside,dv,np.inf).min(1))
+    np.savez_compressed(f'results/rebuilt/{tag}_{pol}_contour_distance.npz',dmin_contour_inbox_km=np.where(inside,dv,np.inf).min(1))

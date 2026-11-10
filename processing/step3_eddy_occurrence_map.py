@@ -1,13 +1,18 @@
-"""Eddy occurrence frequency map: % of days 2003-2020 each 0.04-deg cell lies inside any META4.0 effective contour
-(both polarities, union), on the 0-200 km Table S1 box domain (data/processed/rings_<tag>.npz). Usage: s19_occurrence_map.py TAG"""
+"""Processing step 3: eddy occurrence map, the percentage of days (2003-2020) each 0.04 deg cell lies inside
+any META4.0 effective contour (both polarities), within 0-200 km of the coast.
+
+Usage:   python processing/step3_eddy_occurrence_map.py REGION
+Inputs:  data/inputs/meta4_<region>_<polarity>.npz, data/processed/<region>_coastal_rings.npz
+Output:  results/rebuilt/<region>_eddy_occurrence_map.npz (bundled copy: data/processed/)
+"""
 from pathlib import Path as FilePath
 import os
 os.chdir(FilePath(__file__).resolve().parents[1])
 FilePath("results/rebuilt").mkdir(parents=True, exist_ok=True)
 import sys, numpy as np, pandas as pd
 from matplotlib.path import Path
-tag = sys.argv[1]; IM = "data/intermediate"
-rz = np.load(f"data/processed/rings_{tag}.npz"); pdist = rz["dist"].astype("float64"); plon = rz["lon"]; plat = rz["lat"]
+tag = sys.argv[1]; IM = "data/inputs"
+rz = np.load(f"data/processed/{tag}_coastal_rings.npz"); pdist = rz["dist"].astype("float64"); plon = rz["lon"]; plat = rz["lat"]
 ny, nx = (pdist.shape[0]//2)*2, (pdist.shape[1]//2)*2
 g4lon = plon[:nx].reshape(-1, 2).mean(1); g4lat = plat[:ny].reshape(-1, 2).mean(1); g4s = np.diff(g4lon).mean()
 d4 = np.nanmean(pdist[:ny, :nx].reshape(ny//2, 2, nx//2, 2), axis=(1, 3))
@@ -29,5 +34,5 @@ for tt in td:
             m[j0:j1, i0:i1] |= Path(np.column_stack([lo, la])).contains_points(np.column_stack([GX.ravel(), GY.ravel()])).reshape(GX.shape)
     cnt += m
 freq = np.where(np.isfinite(d4), 100*cnt/len(td), np.nan)
-np.savez_compressed(f"results/rebuilt/occurrence_map_{tag}.npz", lon=g4lon, lat=g4lat, freq_pct=freq, dist_km=d4, n_days=len(td))
+np.savez_compressed(f"results/rebuilt/{tag}_eddy_occurrence_map.npz", lon=g4lon, lat=g4lat, freq_pct=freq, dist_km=d4, n_days=len(td))
 print(tag, "domain-mean occurrence %.1f%%, max %.1f%%" % (np.nanmean(freq), np.nanmax(freq)))

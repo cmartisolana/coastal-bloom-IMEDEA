@@ -1,5 +1,5 @@
 {
-  "SW_Africa": {
+  "benguela": {
     "name": "Benguela",
     "box": [
       9.83,
@@ -8,7 +8,7 @@
       -13.27
     ]
   },
-  "NA_east": {
+  "gulf_stream": {
     "name": "Gulf Stream",
     "box": [
       -80.26,

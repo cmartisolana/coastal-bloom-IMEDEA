@@ -1,4 +1,10 @@
-"""Reproduce the three figures (eddies, currents and Ekman, eddy polarity); inference labels use OLS with OLS CIs."""
+"""Draw the three figures (PDF, SVG and PNG in figures/).
+
+Usage:   uv run python scripts/plot_figures.py   (after scripts/compute_trends.py)
+Inputs:  data/processed/ (maps and coastal geometry), results/trends/all_trends.csv, results/series/
+Outputs: figures/eddies.*, figures/currents_Ekman.*, figures/eddy_polarity_share.*
+Trend labels and bars use the OLS estimates and their 95% CIs; bars are coloured only where the CI excludes zero.
+"""
 import json, os, numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
@@ -6,14 +12,23 @@ from matplotlib.patches import Polygon, Patch
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
-IM = "data/processed"; O7 = O9 = "results/tables"
+IM = "data/processed"; SERIES = "results/series"
+TRENDS = pd.read_csv("results/trends/all_trends.csv")
 OUT = "figures"; os.makedirs(OUT, exist_ok=True)
 INK, INK2, MUTED, GRID, NS, LAND = "#0b0b0b", "#52514e", "#8a8984", "#e4e3df", "#d3d2cd", "#dcdbd6"; S1, S2, S3 = "#2a78d6", "#eb6834", "#1baf7a"
 plt.rcParams.update({"font.size": 6.5, "font.family": "DejaVu Sans", "axes.linewidth": 0.6, "axes.edgecolor": MUTED, "axes.labelcolor": INK2,
                      "xtick.color": INK2, "ytick.color": INK2, "xtick.major.width": 0.6, "ytick.major.width": 0.6, "xtick.major.size": 2.5, "ytick.major.size": 2.5,
                      "axes.spines.top": False, "axes.spines.right": False, "axes.titlesize": 7, "axes.titleweight": "bold", "axes.titlelocation": "left",
                      "legend.frameon": False, "pdf.fonttype": 42, "svg.fonttype": "none"})
-REG = [("SW_Africa", "Benguela"), ("NA_east", "Gulf Stream")]
+REG = [("benguela", "Benguela"), ("gulf_stream", "Gulf Stream")]
+RINGS = [f"{10*k}-{10*k+10}" for k in range(20)]
+def trend(region, metric):
+    """One row of all_trends.csv."""
+    return TRENDS[(TRENDS.region == region) & (TRENDS.metric == metric)].iloc[0]
+def ring_trends(region, prefix):
+    """Per-ring rows of all_trends.csv (metric = prefix + ring label), ordered by distance; adds bar position x (km)."""
+    t = TRENDS[(TRENDS.region == region) & TRENDS.metric.str.startswith(prefix)].copy()
+    t["x"] = [int(m[len(prefix):].split("-")[0])+5 for m in t.metric]; return t.sort_values("x")
 boxes = json.load(open("config/regions.json"))
 land = np.load("data/processed/ne10m_land_coast_lines.npz")["land"]; LANDR = np.split(land, np.flatnonzero(np.isnan(land[:, 0])))
 def f2(v): return f"{0.0 if abs(v) < 0.005 else v:+.2f}"
@@ -57,42 +72,39 @@ def save(fig, name):
     plt.close(fig)
 
 # ======================= Eddies =======================
-S = pd.read_csv(f"{O7}/equivalent_metrics_summary.csv").set_index("region"); P = pd.read_csv(f"{O9}/polarity_summary.csv")
 fig, top, rows = layout()
 for col, (tag, name) in enumerate(REG):
-    s = S.loc[tag]; ax = fig.add_subplot(top[col])
-    om = np.load(f"{IM}/occurrence_map_{tag}.npz"); gl, ga, F, D = om["lon"], om["lat"], om["freq_pct"], om["dist_km"]; st = np.diff(gl).mean()
+    C = pd.read_csv(f"{SERIES}/{tag}_eddy_all_centroid_monthly.csv"); cen = trend(tag, "eddy_all|centroid"); near = trend(tag, "eddy_all|share_0_60")
+    ax = fig.add_subplot(top[col])
+    om = np.load(f"{IM}/{tag}_eddy_occurrence_map.npz"); gl, ga, F, D = om["lon"], om["lat"], om["freq_pct"], om["dist_km"]; st = np.diff(gl).mean()
     pm = ax.pcolormesh(gl-st/2, ga-st/2, F, vmin=0, vmax=40, cmap="Blues", shading="auto", rasterized=True)
     ax.contourf(gl, ga, np.where(np.isfinite(F), D, np.nan), levels=[0, 30], colors=["#ffffff"], alpha=0.55)
     ax.contour(gl, ga, D, levels=[60], colors=[INK2], linewidths=0.6, linestyles="--")
-    ax.contour(gl, ga, D, levels=[s.centroid_mean_km], colors=[INK], linewidths=1.0)
+    ax.contour(gl, ga, D, levels=[C.centroid_km.mean()], colors=[INK], linewidths=1.0)
     basemap(ax, tag, "ab"[col], name)
     if col == 1: colorbar(fig, ax, pm, "eddy occurrence (% of days)")
-    a = fig.add_subplot(rows[0, col]); C = pd.read_csv(f"{O7}/{tag}_occupancy_centroid_monthly.csv"); t = pd.to_datetime(C.month); tt = (t-t.iloc[0]).dt.days/365.25
+    a = fig.add_subplot(rows[0, col]); t = pd.to_datetime(C.month); tt = (t-t.iloc[0]).dt.days/365.25
     a.plot(t, C.centroid_km, color=S1, lw=0.5, alpha=0.45)
-    hs = [(a.plot(t, C.stl_trend_km, color=S1, lw=1.6)[0], f"all  {f2(s.centroid_ols_km_per_yr)} ({c2(s.centroid_lo)} to {c2(s.centroid_hi)})")]
+    hs = [(a.plot(t, C.stl_trend_km, color=S1, lw=1.6)[0], f"all  {f2(cen.estimate)} ({c2(cen.ci95_low)} to {c2(cen.ci95_high)})")]
     for pol, c, ls in [("cyclonic", INK, "-"), ("anticyclonic", S3, "-")]:
-        z = np.load(f"{O9}/{tag}_{pol}_centroid_monthly.npz", allow_pickle=True); r = P[(P.region == tag) & (P.polarity == pol)].iloc[0]
-        h, = a.plot(t, z["stl"], color=c, lw=0.9 if sig(r.lo, r.hi) else 0.7, ls=ls if sig(r.lo, r.hi) else (0, (3, 1.5)))
-        hs.append((h, f"{pol}  {f2(r.ols_km_per_yr)} ({c2(r.lo)} to {c2(r.hi)})"))
-    mid = C.stl_trend_km.mean()-s.centroid_sen_km_per_yr*tt.mean(); a.plot(t, mid+s.centroid_sen_km_per_yr*tt, color=S1, lw=0.7, ls=(0, (4, 2)))
+        z = pd.read_csv(f"{SERIES}/{tag}_eddy_{pol}_centroid_monthly.csv"); r = trend(tag, f"eddy_{pol}|centroid"); ok = sig(r.ci95_low, r.ci95_high)
+        h, = a.plot(t, z.stl_trend_km, color=c, lw=0.9 if ok else 0.7, ls=ls if ok else (0, (3, 1.5)))
+        hs.append((h, f"{pol}  {f2(r.estimate)} ({c2(r.ci95_low)} to {c2(r.ci95_high)})"))
+    mid = C.stl_trend_km.mean()-cen.descriptive_sen*tt.mean(); a.plot(t, mid+cen.descriptive_sen*tt, color=S1, lw=0.7, ls=(0, (4, 2)))
     years(a); a.set_ylabel("eddy centroid (km)"); headroom(a, 0.42)
     leg = a.legend(*zip(*hs), loc="upper left", fontsize=5.6, handlelength=1.6, title="OLS km yr⁻¹ (95% CI); curves: STL", title_fontsize=5.6)
     leg._legend_box.align = "left"; leg.get_title().set_color(INK2)
     a.set_title(f"{'cd'[col]}  {name}: cross-shore centroid", pad=3)
-    a = fig.add_subplot(rows[1, col]); R = pd.read_csv(f"{O7}/{tag}_occupancy_share_ring_trends.csv"); x = np.arange(5, 200, 10)
-    sharebars(a, x, R.slope_pp_per_decade, R.lo, R.hi); ringaxis(a, "share trend (pp decade⁻¹)", shade=True); headroom(a)
-    a.text(0.02, 0.97, f"0–60 km {f1(s.nearshore_share_pp_per_decade)} pp decade⁻¹ ({f1(s.nearshore_lo)} to {f1(s.nearshore_hi)})", transform=a.transAxes, ha="left", va="top", fontsize=6, color=INK2)
+    a = fig.add_subplot(rows[1, col]); R = ring_trends(tag, "eddy_all|share_ring_")
+    sharebars(a, R.x.values.astype(float), R.estimate, R.ci95_low, R.ci95_high); ringaxis(a, "share trend (pp decade⁻¹)", shade=True); headroom(a)
+    a.text(0.02, 0.97, f"0–60 km {f1(near.estimate)} pp decade⁻¹ ({f1(near.ci95_low)} to {f1(near.ci95_high)})", transform=a.transAxes, ha="left", va="top", fontsize=6, color=INK2)
     a.set_title(f"{'ef'[col]}  {name}: contribution share by ring", pad=3)
 save(fig, "eddies")
 
 # ======================= Currents and Ekman =======================
-K = pd.read_csv(f"{O9}/ekman_trends.csv")
-def krows(tag, prefix):
-    s = K[(K.region == tag) & K.metric.str.startswith(prefix)].copy(); s["x"] = [int(m.split("_")[-1].split("-")[0])+5 for m in s.metric]; return s.sort_values("x")
 fig, top, rows = layout()
 for col, (tag, name) in enumerate(REG):
-    z = np.load(f"{IM}/{tag}_ekman_rings.npz", allow_pickle=True); gl, ga = z["lon"], z["lat"]; rz = np.load(f"data/processed/rings_{tag}.npz"); pdist = rz["dist"].astype(float)
+    z = np.load(f"{IM}/{tag}_currents.npz", allow_pickle=True); gl, ga = z["lon"], z["lat"]; rz = np.load(f"{IM}/{tag}_coastal_rings.npz"); pdist = rz["dist"].astype(float)
     ax = fig.add_subplot(top[col])
     LO, LA = np.meshgrid(gl, ga); ii = np.clip(np.rint((LO-rz["lon"][0])/float(rz["res"])).astype(int), 0, len(rz["lon"])-1)
     jj = np.clip(np.rint((LA-rz["lat"][0])/float(rz["res"])).astype(int), 0, len(rz["lat"])-1); inside = np.isfinite(pdist[jj, ii])
@@ -102,24 +114,23 @@ for col, (tag, name) in enumerate(REG):
     if col == 1: colorbar(fig, ax, pm, "offshore Ekman velocity (cm s⁻¹)", "both")
     a = fig.add_subplot(rows[0, col])
     for i, (key, c) in enumerate([("ekman_xshelf_15m|ring_", S3), ("total_xshelf_15m|ring_", INK2)]):
-        s = krows(tag, key); sharebars(a, s.x.values.astype(float), s.slope_per_decade, s.lo, s.hi, w=4, off=-2+4*i, color=c)
+        s = ring_trends(tag, key); sharebars(a, s.x.values.astype(float), s.estimate, s.ci95_low, s.ci95_high, w=4, off=-2+4*i, color=c)
     ringaxis(a, "trend (cm s⁻¹ decade⁻¹)", shade=True); headroom(a, 0.3)
     a.legend(handles=[Patch(color=S3, label="Ekman"), Patch(color=INK2, label="geostrophic + Ekman")], loc="upper right", fontsize=5.8, ncol=2, handlelength=1.2)
     a.set_title(f"{'cd'[col]}  {name}: offshore velocity at 15 m", pad=3)
-    a = fig.add_subplot(rows[1, col]); s = krows(tag, "ekman_div_15m|share_ring_")
-    sharebars(a, s.x.values.astype(float), s.slope_per_decade, s.lo, s.hi); ringaxis(a, "share trend (pp decade⁻¹)", excluded=True); headroom(a)
-    b0 = K[(K.region == tag) & (K.metric == "ekman_div_15m|upwelling_share_30_60")].iloc[0]
-    a.text(0.98, 0.97, f"30–60 km {f1(b0.slope_per_decade)} pp decade⁻¹ ({f1(b0.lo)} to {f1(b0.hi)})", transform=a.transAxes, ha="right", va="top", fontsize=6, color=INK2)
+    a = fig.add_subplot(rows[1, col]); s = ring_trends(tag, "ekman_div_15m|share_ring_")
+    sharebars(a, s.x.values.astype(float), s.estimate, s.ci95_low, s.ci95_high); ringaxis(a, "share trend (pp decade⁻¹)", excluded=True); headroom(a)
+    b0 = trend(tag, "ekman_div_15m|upwelling_share_30_60")
+    a.text(0.98, 0.97, f"30–60 km {f1(b0.estimate)} pp decade⁻¹ ({f1(b0.ci95_low)} to {f1(b0.ci95_high)})", transform=a.transAxes, ha="right", va="top", fontsize=6, color=INK2)
     a.set_title(f"{'ef'[col]}  {name}: positive-divergence share", pad=3)
 save(fig, "currents_Ekman")
 
 # ======================= Eddy polarity share =======================
-PS = pd.read_csv(f"{O9}/polarity_share_ring_trends.csv")
 fig, ax = plt.subplots(1, 2, figsize=(7.09, 2.4), gridspec_kw=dict(left=0.08, right=0.985, top=0.9, bottom=0.17, wspace=0.28))
 for col, (tag, name) in enumerate(REG):
     a = ax[col]; x = np.arange(5, 200, 10)
     for i, (pol, c) in enumerate([("cyclonic", INK), ("anticyclonic", S3)]):
-        s = PS[(PS.region == tag) & (PS.polarity == pol)]; sharebars(a, x, s.slope_pp_per_decade, s.lo, s.hi, w=4, off=-2+4*i, color=c)
+        s = ring_trends(tag, f"eddy_{pol}|share_ring_"); sharebars(a, x, s.estimate, s.ci95_low, s.ci95_high, w=4, off=-2+4*i, color=c)
     ringaxis(a, "share trend (pp decade⁻¹)", shade=True); headroom(a, 0.25)
     a.legend(handles=[Patch(color=INK, label="cyclonic"), Patch(color=S3, label="anticyclonic")], loc="upper left", fontsize=5.8, ncol=2, handlelength=1.2)
     a.set_title(f"{'ab'[col]}  {name}: contribution share by polarity", pad=3)

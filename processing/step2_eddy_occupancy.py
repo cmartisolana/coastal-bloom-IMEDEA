@@ -1,15 +1,21 @@
-"""Monthly eddy occupancy per coastal ring (all, cyclonic, anticyclonic), using the contour-distance preselection."""
+"""Processing step 2: monthly eddy occupancy in each 10 km coastal ring (all, cyclonic, anticyclonic eddies).
+
+Usage:   python processing/step2_eddy_occupancy.py REGION
+Inputs:  data/inputs/meta4_<region>_<polarity>.npz, data/processed/<region>_coastal_rings.npz,
+         results/rebuilt/<region>_<polarity>_contour_distance.npz (step 1)
+Output:  results/rebuilt/<region>_eddy_occupancy.npz (bundled copy: data/processed/)
+"""
 from pathlib import Path as FilePath
 import os
 os.chdir(FilePath(__file__).resolve().parents[1])
 FilePath("results/rebuilt").mkdir(parents=True, exist_ok=True)
 import sys, numpy as np, pandas as pd
 from matplotlib.path import Path
-R = 6371.0088; tag = sys.argv[1]; IM = "data/intermediate"; OUT = "results/rebuilt"
+R = 6371.0088; tag = sys.argv[1]; IM = "data/inputs"; OUT = "results/rebuilt"
 os.makedirs(OUT, exist_ok=True)
 edges = np.arange(0, 201, 10); dk = edges[1:].astype(float); nr = 20
 M = pd.period_range("2003-01", "2020-12", freq="M").astype(str)
-rz = np.load(f"data/processed/rings_{tag}.npz"); pdist = rz["dist"].astype("float64"); plon = rz["lon"]; plat = rz["lat"]; res = float(rz["res"])
+rz = np.load(f"data/processed/{tag}_coastal_rings.npz"); pdist = rz["dist"].astype("float64"); plon = rz["lon"]; plat = rz["lat"]; res = float(rz["res"])
 ok = np.isfinite(pdist); ring = np.where(ok, np.minimum((np.nan_to_num(pdist)//10).astype(int), 19), -1)
 pa = np.where(ok, (R*np.radians(res))**2*np.cos(np.radians(plat))[:, None], 0.0)
 A_ring = np.bincount(ring[ok], weights=pa[ok], minlength=nr)
@@ -25,7 +31,7 @@ cats = ["all", "anticyclonic", "cyclonic"]
 occ = {c: np.zeros((len(days), nr)) for c in cats}
 P = {}
 for pol in ["anticyclonic", "cyclonic"]:
-    e = np.load(f"{IM}/meta4_{tag}_{pol}.npz"); g = np.load(f"results/rebuilt/s2geom_{tag}_{pol}.npz")
+    e = np.load(f"{IM}/meta4_{tag}_{pol}.npz"); g = np.load(f"results/rebuilt/{tag}_{pol}_contour_distance.npz")
     t = e["time"].astype(int)
     touch = np.isfinite(g["dmin_contour_inbox_km"]) & (g["dmin_contour_inbox_km"] <= 200)
     P[pol] = (t, e["contour_lon"], e["contour_lat"], touch)
@@ -48,4 +54,4 @@ for di, tt in enumerate(tt_days):
         occ[c][di] = np.bincount(r_[kk], weights=a_[kk], minlength=nr)/A_ring
 mon_mean = lambda X: pd.DataFrame(X).groupby(dmon).mean().reindex(M).values
 for c in cats: ring_m[f"occupancy_{c}"] = mon_mean(occ[c])
-np.savez_compressed(f"{OUT}/{tag}_ring_monthly.npz", months=np.array(M), ring_area_km2=A_ring, ring_limit_km=dk, **ring_m)
+np.savez_compressed(f"{OUT}/{tag}_eddy_occupancy.npz", months=np.array(M), ring_area_km2=A_ring, ring_limit_km=dk, **ring_m)

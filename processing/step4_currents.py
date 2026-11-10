@@ -1,7 +1,10 @@
-"""Rebuild the three 15 m current/divergence fields needed for the currents and Ekman figure.
+"""Processing step 4: offshore Ekman and total velocity and Ekman divergence at 15 m, averaged in each 10 km coastal ring.
 
-Uses bundled monthly grids; split months are combined with day weights.
-Statistical analyses are performed only in scripts/analyse.py.
+Usage:   python processing/step4_currents.py REGION
+Inputs:  data/inputs/globcurrent_<region>_*.npz (monthly GlobCurrent grids; Benguela in four time chunks whose
+         split months are combined with day weights), data/processed/<region>_coastal_rings.npz,
+         data/processed/ne10m_coast_filtered_2km.npz
+Output:  results/rebuilt/<region>_currents.npz (bundled copy: data/processed/)
 """
 from pathlib import Path as FilePath
 import os
@@ -9,7 +12,7 @@ os.chdir(FilePath(__file__).resolve().parents[1])
 FilePath("results/rebuilt").mkdir(parents=True, exist_ok=True)
 import sys, glob, os, json, numpy as np, pandas as pd
 from scipy.spatial import cKDTree
-IM = "data/intermediate"; O9 = "results/rebuilt"; os.makedirs(O9, exist_ok=True); R = 6371.0088
+IM = "data/inputs"; O9 = "results/rebuilt"; os.makedirs(O9, exist_ok=True); R = 6371.0088
 KEYS = ["ekman_xshelf_15m", "total_xshelf_15m", "ekman_div_15m"]
 CHUNK_DAYS = {0: ("2003-01-01", "2005-05-25"), 1: ("2005-05-26", "2011-08-06"), 2: ("2011-08-07", "2017-10-17"), 3: ("2017-10-18", "2020-12-31")}
 def xyz(lo, la):
@@ -32,14 +35,14 @@ def div(u, v, LA):
     d = (np.roll(u, -1, 2)-np.roll(u, 1, 2))/(2*dx) + (np.roll(v, -1, 1)-np.roll(v, 1, 1))/(2*dy)
     d[:, :, [0, -1]] = np.nan; d[:, [0, -1], :] = np.nan; return d
 def load(tag):
-    comp = f"{IM}/mob_components_{tag}.npz"
+    comp = f"{IM}/globcurrent_{tag}_monthly.npz"
     if os.path.exists(comp):
         z = np.load(comp, allow_pickle=True); gl, ga = z["lon"], z["lat"]; box = json.load(open("config/regions.json"))[tag]["box"]
         ne_, nn_ = normals(gl, ga, box); LA = np.meshgrid(gl, ga)[1]
         F = {"ekman_xshelf_15m": z["ue_15m"]*ne_+z["ve_15m"]*nn_,
              "total_xshelf_15m": z["uo_15m"]*ne_+z["vo_15m"]*nn_, "ekman_div_15m": div(z["ue_15m"], z["ve_15m"], LA)}
         return z["months"].astype(str), gl, ga, F
-    files = sorted(glob.glob(f"{IM}/mob_{tag}_chunk*.npz"), key=lambda f: int(f.split("chunk")[1].split(".")[0]))
+    files = sorted(glob.glob(f"{IM}/globcurrent_{tag}_chunk*.npz"), key=lambda f: int(f.split("chunk")[1].split(".")[0]))
     allm = pd.period_range("2003-01", "2020-12", freq="M").astype(str); acc = {k: 0.0 for k in KEYS}; wts = {k: 0.0 for k in KEYS}
     for f in files:
         c = int(f.split("chunk")[1].split(".")[0]); z = np.load(f, allow_pickle=True); gl, ga = z["lon"], z["lat"]
@@ -51,10 +54,10 @@ def load(tag):
             np.add.at(acc[k], mi, np.where(ok, x, 0)*w[:, None, None]); np.add.at(wts[k], mi, ww)
     F = {k: acc[k]/np.where(wts[k] > 0, wts[k], np.nan) for k in KEYS}
     return np.array(allm), gl, ga, F
-for tag in sys.argv[1:] or ["SW_Africa", "NA_east"]:
+for tag in sys.argv[1:] or ["benguela", "gulf_stream"]:
     months, gl, ga, F = load(tag)
     # ring weights: 0.02-deg ocean pixels (Table S1 box geometry) per 0.25-deg cell
-    rz = np.load(f"data/processed/rings_{tag}.npz"); pdist = rz["dist"].astype("float64"); plon, plat = rz["lon"], rz["lat"]; res = float(rz["res"])
+    rz = np.load(f"data/processed/{tag}_coastal_rings.npz"); pdist = rz["dist"].astype("float64"); plon, plat = rz["lon"], rz["lat"]; res = float(rz["res"])
     ok = np.isfinite(pdist); ring = np.where(ok, np.minimum(np.nan_to_num(pdist)//10, 19), -1).astype(int)
     pa = np.where(ok, (R*np.radians(res))**2*np.cos(np.radians(plat))[:, None], 0.0)
     ci = np.rint((np.broadcast_to(plon, pdist.shape)-gl[0])/0.25).astype(int); cj = np.rint((np.broadcast_to(plat[:, None], pdist.shape)-ga[0])/0.25).astype(int)
@@ -68,5 +71,5 @@ for tag in sys.argv[1:] or ["SW_Africa", "NA_east"]:
         out[f"ring_{k}"] = Rm; out[f"cov_{k}"] = W.sum(0)/np.bincount(ring[ok], weights=pa[ok], minlength=20)
         out[f"map_mean_{k}"] = np.nanmean(X, 0)
     out["lon"], out["lat"] = gl, ga
-    np.savez_compressed(f"{O9}/{tag}_ekman_rings.npz", **out)
+    np.savez_compressed(f"{O9}/{tag}_currents.npz", **out)
     print(tag, "rebuilt 15 m current and divergence ring fields")

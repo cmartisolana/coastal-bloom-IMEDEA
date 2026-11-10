@@ -8,11 +8,11 @@
 | [Copernicus-GlobCurrent, MULTIOBS_GLO_PHY_MYNRT_015_003 (Copernicus Marine)](https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_MYNRT_015_003/description) | Dataset `cmems_obs-mob_glo_phy-cur_my_0.25deg_P1D-m`, version 202411: Ekman and total currents at 15 m |
 | [Natural Earth 1:10m physical vectors](https://www.naturalearthdata.com/downloads/10m-physical-vectors/) | Coastline and land |
 
-The global products are not redistributed; regional extracts are in `data/intermediate/`.
+The global products are not redistributed; regional extracts are in `data/inputs/`.
 
 ## Scope and spatial domain
 
-Analyses cover 216 months (January 2003–December 2020), 18 annual observations and two rectangular regions. Benguela (`SW_Africa`): 9.83–19.77° E, 36.56–13.27° S. Gulf Stream (`NA_east`): 80.26–60.86° W, 31.03–46.09° N. Twenty distance bands span 0–200 km in 10 km increments. The outer edge (10, 20, …, 200 km) represents each band in centroid calculations. Geographic boxes are stored in `config/regions.json`.
+Analyses cover 216 months (January 2003–December 2020), 18 annual observations and two rectangular regions. Benguela (`benguela`): 9.83–19.77° E, 36.56–13.27° S. Gulf Stream (`gulf_stream`): 80.26–60.86° W, 31.03–46.09° N. Twenty distance bands span 0–200 km in 10 km increments. The outer edge (10, 20, …, 200 km) represents each band in centroid calculations. Geographic boxes are stored in `config/regions.json`.
 
 The coast is a previously prepared Natural Earth 1:10m coastline, filtered to long coastal segments (minimum length 1428 km) and resampled at about 2 km. The supplied coastline and land arrays are frozen inputs. A nominal 0.02° ocean grid is formed by rasterising Natural Earth land polygons. Great-circle distance to the filtered coastline determines the band; land and distances beyond 200 km are masked. The distance grid is stored as float16. Ocean-pixel area is approximated by `(R Δθ)^2 cos(latitude)`, with R = 6371.0088 km, when aggregating the grid.
 
@@ -34,7 +34,7 @@ Annual share: `S_yk = 100 A_k Σ_(m in y) f_mk / Σ_j A_j Σ_(m in y) f_mj`. Eac
 
 ## Offshore currents and positive-divergence proxy
 
-GlobCurrent daily 0.25° product version 202411 provides Ekman (`ue`, `ve`) and total (`uo`, `vo`) velocity at 15 m (the primary depth). Total means geostrophic plus Ekman. Surface fields are present in upstream archives but are not part of the retained figures.
+GlobCurrent daily 0.25° product version 202411 provides Ekman (`ue`, `ve`) and total (`uo`, `vo`) velocity at 15 m (the primary depth). Total means geostrophic plus Ekman. Surface (0 m) fields are included in `data/inputs/` but are not used in the figures.
 
 The offshore direction is a unit vector from the nearest point on the smoothed coastline to each current-grid centre, projected into local east and north. Coastline unit vectors are smoothed using 13 successive approximately 2 km vertices with edge padding, then normalised. Grid-centre offshore velocity is `u n_e + v n_n`, positive seaward.
 
@@ -50,7 +50,7 @@ For upwelling shares, retain 30–200 km rings with finite monthly ring-mean div
 
 ## Trends and inference
 
-All model fits are recalculated in `scripts/analyse.py`.
+All model fits are computed in `scripts/compute_trends.py`.
 
 - Monthly centroid and velocity inference: OLS with intercept, linear time in years and eleven calendar-month indicators. Newey–West/Bartlett covariance uses 12 monthly lags, actual calendar separation and n/(n−13) scaling. No interpolation is used for these fits. There are 216 observations in complete series.
 - Annual shares: OLS intercept plus centred year; Bartlett covariance with two annual lags and n/(n−2) scaling. There are 18 observations.
